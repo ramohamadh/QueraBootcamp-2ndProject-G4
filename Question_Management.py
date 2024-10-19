@@ -5,18 +5,29 @@ app = Flask (__name__)
 
 #============================
 Questions = [
-    { 'Q' : '2+2' , 'A' : '4' },
-    { 'Q' : '3+4' , 'A' : '7'}
+    { 'Q': '2+2', 'A': '4', 'category': 'Math' },
+    { 'Q': '3+4', 'A': '7', 'category': 'Math' },
+    { 'Q': 'Capital of France?', 'A': 'Paris', 'category': 'Geography' },
+    { 'Q': 'Author of Hamlet?', 'A': 'Shakespeare', 'category': 'Literature' }
 ]
 #============================
 
 
 
 
-@app.route ('/home/question/category')
-def Question_manager():
-    return render_template ('show_category.html', Questions = Questions)  # template question + botton add/remove
+@app.route('/home/question/show_question/<category>')
+def Question_manager(category):
+    filtered_questions = [q for q in Questions if q['category'] == category]
+    return render_template('show_questions.html', Questions=filtered_questions, category=category)  # template question + botton add/remove
     
+
+
+@app.route('/home/question/categories')
+def show_categories():
+    categories = {q['category'] for q in Questions}
+    return render_template('show_categories.html', categories=categories)
+
+
 
 @app.route ('/home/question/<category>/add')
 def add_Question():

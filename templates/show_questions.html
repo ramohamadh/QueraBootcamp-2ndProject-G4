@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+          <!-- <th scope="col">#</th> -->
+          <th scope="col">Question</th>
+          <th scope="col">Answer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for question in Questions %}
+            <tr>
+                <th>{{ question['Q'] }}</th>
+                <td>{{ question['A'] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+<div class="d-grid gap-2 d-md-block">
+    <a href="#" class="btn">
+        Remove
+    </a>
+    <a href="#" class="btn">
+        Add
+    </a>
+</div>
+
+{%  endblock %}

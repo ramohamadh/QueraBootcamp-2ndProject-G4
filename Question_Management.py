@@ -15,17 +15,17 @@ Questions = [
 
 
 
-@app.route('/home/question/show_category/<category>')
+@app.route('/home/question/show_question/<category>')
 def Question_manager(category):
     filtered_questions = [q for q in Questions if q['category'] == category]
-    return render_template('show_category.html', Questions=filtered_questions, category=category)  # template question + botton add/remove
+    return render_template('show_questions.html', Questions=filtered_questions, category=category)  # template question + botton add/remove
     
 
 
 @app.route('/home/question/categories')
 def show_categories():
     categories = {q['category'] for q in Questions}
-    return render_template('categories.html', categories=categories)
+    return render_template('show_categories.html', categories=categories)
 
 
 

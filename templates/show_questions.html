@@ -2,6 +2,9 @@
 
 {% block content %}
 
+<h1>{{ category }} Questions</h1>
+<br>
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -13,7 +16,7 @@
     <tbody>
         {% for question in Questions %}
             <tr>
-                <th>{{ question['Q'] }}</th>
+                <td>{{ question['Q'] }}</td>
                 <td>{{ question['A'] }}</td>
             </tr>
         {% endfor %}
@@ -21,10 +24,10 @@
   </table>
 
 <div class="d-grid gap-2 d-md-block">
-    <a href="#" class="btn">
+    <a href="{{ url_for('remove_Question', category=category) }}" class="btn">
         Remove
     </a>
-    <a href="#" class="btn">
+    <a href="{{ url_for('add_Question') }}" class="btn">  <!-- form category ro disable kon, category ro befrest -->
         Add
     </a>
 </div>

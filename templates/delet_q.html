@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<form action="{{ url_for('remove_Question', category=category) }}", method="post">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Chekbox</th>
+                <th scope="col">Question</th>
+                <th scope="col">Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in Questions %}
+            <tr>
+                <td><input type="checkbox" name="id" value="{{ question['id'] }}"></td>
+                <td>{{ question['Q'] }}</td>
+                <td>{{ question['A'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br><button type="submit" class="btn btn-danger">Delete Selected</button>
+</form>
+
+<!-- return bezar -->
+
+{%  endblock %}

@@ -27,8 +27,11 @@
     <a href="{{ url_for('remove_Question', category=category) }}" class="btn">
         Remove
     </a>
-    <a href="{{ url_for('add_Question') }}" class="btn">  <!-- form category ro disable kon, category ro befrest -->
+    <a href="{{ url_for('add_Question', category=category) }}" class="btn"> 
         Add
+    </a>
+    <a href="{{ url_for('show_categories') }}" class="btn">
+        Return
     </a>
 </div>
 

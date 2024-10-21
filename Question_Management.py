@@ -17,23 +17,25 @@ Questions = [
 #============================
 
 
+@app.route('/')
+@app.route('/home')
+def index():
+    return render_template('home.html')
 
 
-@app.route('/home/question/show_question/<category>')
+@app.route('/questions/<category>')
 def Question_manager(category):
     filtered_questions = [q for q in Questions if q['category'] == category]
-    return render_template('show_questions.html', Questions=filtered_questions, category=category)  # template question + botton add/remove
+    return render_template('show_questions.html', Questions=filtered_questions, category=category)
     
 
-
-@app.route('/home/question/categories')
+@app.route('/categories')
 def show_categories():
     categories = {q['category'] for q in Questions}
     return render_template('show_categories.html', categories=categories)
 
 
-
-@app.route ('/home/question/add', methods=['GET', 'POST'] )
+@app.route ('/questions/add', methods=['GET', 'POST'] )
 def add_Question():
     global Questions, last_id
     if request.method == 'POST':
@@ -45,8 +47,7 @@ def add_Question():
     return render_template ('add_q.html')
 
 
-
-@app.route ('/home/question/<category>/delet', methods = ['GET', 'POST'])
+@app.route ('/questions/delet/<category>', methods = ['GET', 'POST'])
 def remove_Question(category):
     global Questions
     if request.method == 'POST':
@@ -57,12 +58,7 @@ def remove_Question(category):
     return render_template('delet_q.html', Questions=filtered_questions, category=category)
 
 
-
-
-
-
-
-@app.route ('/home/question/add_category')
+@app.route ('/categories/add')
 def add_category():
     pass # template : html form baraye name of category
 

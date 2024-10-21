@@ -15,6 +15,7 @@ Questions = [
     { 'id': '6', 'Q': '10x10', 'A': '100', 'category': 'Math' },
     { 'id': '7', 'Q': '10/5', 'A': '2', 'category': 'Math' }
 ]
+
 @dataclass
 class User:
     username: str
@@ -22,7 +23,7 @@ class User:
     is_login: bool
     role: str
 
-Users = [User('admin', 'admin', True, 'admin')]
+current_user = User('admin', 'admin', True, 'admin')
 #============================
 
 
@@ -34,45 +35,78 @@ def index():
 
 @app.route('/questions/<category>')
 def Question_manager(category):
-    filtered_questions = [q for q in Questions if q['category'] == category]
-    return render_template('show_questions.html', Questions=filtered_questions, category=category)
+    if current_user.is_login:
+        if current_user.role == 'admin':
+            filtered_questions = [q for q in Questions if q['category'] == category]
+            return render_template('show_questions.html', Questions=filtered_questions, category=category)
+    else:
+        return render_template ('not_allowed.html')
     
 
 @app.route('/categories')
 def show_categories():
-    categories = {q['category'] for q in Questions}
-    return render_template('show_categories.html', categories=categories)
+    if current_user.is_login:
+        if current_user.role == 'admin':
+            categories = {q['category'] for q in Questions}
+            return render_template('show_categories.html', categories=categories)
+    else:
+        return render_template ('not_allowed.html')
 
 
 @app.route ('/questions/add/<category>', methods=['GET', 'POST'] )
 def add_Question(category):
     global Questions, last_id
-    if request.method == 'POST':
-        Question = request.form.get('question')
-        Answer = request.form.get('answer')
-        Category = category
-        last_id += 1
-        Questions.append({'id': last_id, 'Q': Question, 'A': Answer, 'category': Category})
-    return render_template ('add_q.html', category=category)
+    if current_user.is_login:
+        if current_user.role == 'admin':
+            if request.method == 'POST':
+                Question = request.form.get('question')
+                Answer = request.form.get('answer')
+                Category = category
+                last_id += 1
+                Questions.append({'id': last_id, 'Q': Question, 'A': Answer, 'category': Category})
+            return render_template ('add_q.html', category=category)
+    else:
+        return render_template ('not_allowed.html')
 
 
 @app.route ('/questions/delet/<category>', methods = ['GET', 'POST'])
 def remove_Question(category):
     global Questions
-    if request.method == 'POST':
-        selected_ids = request.form.getlist('id')
-        Questions = [q for q in Questions if str(q['id']) not in selected_ids]
+    if current_user.is_login:
+        if current_user.role == 'admin':
+            if request.method == 'POST':
+                selected_ids = request.form.getlist('id')
+                Questions = [q for q in Questions if str(q['id']) not in selected_ids]
 
-    filtered_questions = [q for q in Questions if q['category'] == category]
-    return render_template('delet_q.html', Questions=filtered_questions, category=category)
+            filtered_questions = [q for q in Questions if q['category'] == category]
+            return render_template('delet_q.html', Questions=filtered_questions, category=category)
+    else:
+        return render_template ('not_allowed.html')
 
 
-@app.route ('/categories/add')
+@app.route ('/categories/add', methods = ['GET', 'POST'])
 def add_category():
-    pass # template : html form baraye name of category
+    if current_user.is_login:
+        if current_user.role == 'admin':
+            if request.method == 'POST':
 
-# remove category 
+                category=request.form.get('category')
+                return redirect(url_for('Question_manager', category=category))
+    
+            return render_template('add_category.html')
+    else:
+        return render_template ('not_allowed.html')
 
+
+@app.route ('/categories/delet/<category>')
+def remove_category(category):
+    global Questions
+    if current_user.is_login:
+        if current_user.role == 'admin':
+            Questions = [q for q in Questions if q['category'] != category]
+            return redirect(url_for('show_categories'))
+    else:
+        return render_template ('not_allowed.html')
 
 
 

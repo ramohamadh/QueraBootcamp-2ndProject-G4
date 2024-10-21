@@ -6,6 +6,7 @@
     {% for category in categories %}
     <li><a href="{{ url_for('Question_manager', category=category) }}">{{ category }}</a></li>
     {% endfor %}
+   <li><a href="{{ url_for('add_category') }}">+</a></li>
 </ul>
 
 {%  endblock %}

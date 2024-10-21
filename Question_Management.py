@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request
+from dataclasses import dataclass
 
 app = Flask (__name__)
 
@@ -14,6 +15,14 @@ Questions = [
     { 'id': '6', 'Q': '10x10', 'A': '100', 'category': 'Math' },
     { 'id': '7', 'Q': '10/5', 'A': '2', 'category': 'Math' }
 ]
+@dataclass
+class User:
+    username: str
+    password: str
+    is_login: bool
+    role: str
+
+Users = [User('admin', 'admin', True, 'admin')]
 #============================
 
 
@@ -35,16 +44,16 @@ def show_categories():
     return render_template('show_categories.html', categories=categories)
 
 
-@app.route ('/questions/add', methods=['GET', 'POST'] )
-def add_Question():
+@app.route ('/questions/add/<category>', methods=['GET', 'POST'] )
+def add_Question(category):
     global Questions, last_id
     if request.method == 'POST':
         Question = request.form.get('question')
         Answer = request.form.get('answer')
-        Category = request.form.get('category')
+        Category = category
         last_id += 1
         Questions.append({'id': last_id, 'Q': Question, 'A': Answer, 'category': Category})
-    return render_template ('add_q.html')
+    return render_template ('add_q.html', category=category)
 
 
 @app.route ('/questions/delet/<category>', methods = ['GET', 'POST'])
@@ -68,4 +77,4 @@ def add_category():
 
 
 if __name__ == '__main__':
-    app.run (debug = False)
+    app.run (debug = True)

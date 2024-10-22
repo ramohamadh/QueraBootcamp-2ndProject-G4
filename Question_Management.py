@@ -1,8 +1,8 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, flash
 from dataclasses import dataclass
 
 app = Flask (__name__)
-
+app.secret_key = 'fwugyewqlufywqliugfqw'
 
 #============================
 last_id = 7
@@ -64,6 +64,7 @@ def add_Question(category):
                 Category = category
                 last_id += 1
                 Questions.append({'id': last_id, 'Q': Question, 'A': Answer, 'category': Category})
+                flash('Added Successfully', 'success')
             return render_template ('add_q.html', category=category)
     else:
         return render_template ('not_allowed.html')
@@ -90,8 +91,12 @@ def add_category():
         if current_user.role == 'admin':
             if request.method == 'POST':
 
-                category=request.form.get('category')
-                return redirect(url_for('Question_manager', category=category))
+                new_category=request.form.get('category')
+                if next((True for q in Questions if q['category'] == new_category),False):
+                    flash('This category already exist', 'danger')
+                else:
+                    flash('Successfully created new category', 'success')
+                    return redirect(url_for('Question_manager', category=new_category))
     
             return render_template('add_category.html')
     else:
@@ -104,6 +109,7 @@ def remove_category(category):
     if current_user.is_login:
         if current_user.role == 'admin':
             Questions = [q for q in Questions if q['category'] != category]
+            flash('Category Removed', 'danger')
             return redirect(url_for('show_categories'))
     else:
         return render_template ('not_allowed.html')
@@ -111,4 +117,4 @@ def remove_category(category):
 
 
 if __name__ == '__main__':
-    app.run (debug = True)
+    app.run (debug = False)

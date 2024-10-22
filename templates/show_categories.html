@@ -2,11 +2,30 @@
 
 {% block content %}
 
-<ul>
+{% include 'flash_.html' %}
+<style>
+    a{
+        text-decoration: none;
+    }
+</style>
+
+<div class="row">
     {% for category in categories %}
-    <li><a href="{{ url_for('Question_manager', category=category) }}">{{ category }}</a></li>
+    <div class="col-md-1 mb-1">
+        <div class="card">
+            <div class="card-body text-center">
+                <a href="{{ url_for('Question_manager', category=category) }}" class="category-link">{{ category }}</a>
+            </div>
+        </div>
+    </div>
     {% endfor %}
-   <li><a href="{{ url_for('add_category') }}">+</a></li>
-</ul>
+    <div class="col-md-1 mb-1">
+        <div class="card add-category">
+            <div class="card-body text-center">
+                <a href="{{ url_for('add_category') }}" class="category-link">+</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 {%  endblock %}

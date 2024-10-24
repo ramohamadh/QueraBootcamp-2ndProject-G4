@@ -17,8 +17,8 @@
     <tbody>
         {% for question in Questions %}
             <tr>
-                <td>{{ question['Q'] }}</td>
-                <td>{{ question['A'] }}</td>
+                <td>{{ question['question'] }}</td>
+                <td>{{ question.answer }}</td>
             </tr>
         {% endfor %}
     </tbody>

@@ -50,7 +50,7 @@ cursor = connection.cursor()
 # cursor.execute("INSERT INTO users (username, password, email, admin) VALUES (?, ?, ?, ?)",
 #                ('admin', 'admin', 'admin.admin@gmail.com', 1))
 
-# #categories:
+#categories:
 # cursor.execute("PRAGMA foreign_keys = ON")
 # cursor.execute("INSERT INTO categories (name) VALUES (?)", ('Math',))
 # cursor.execute("INSERT INTO categories (name) VALUES (?)", ('Geography',))
@@ -73,12 +73,6 @@ cursor = connection.cursor()
 #                ('Literature', 'Author of Hamlet?', 'Shakespeare'))
 
 # #===================================================================================================
-
-
-
-
-
-
 
 
 connection.commit()

@@ -1,11 +1,7 @@
-from flask import Flask, render_template, redirect, url_for, request, flash , g
-from dataclasses import dataclass
+from flask import Flask, render_template, redirect, url_for, request, flash , g, Blueprint
 import sqlite3
 
-app = Flask (__name__)
-app.secret_key = 'fwugyewqlufywqliugfqw'
-
-
+Question_Management = Blueprint ("Question_Management", __name__, template_folder="templates")
 
 def get_db():
     if 'db' not in g:
@@ -14,16 +10,9 @@ def get_db():
         # print("Row factory is set")
     return g.db
 
-@app.teardown_appcontext
-def close_db(exception):
-    db = g.pop('db', None)
-    if exception:
-        print(f'error: {exception}')
-    if db is not None:
-        db.close()
 
 #==================
-@app.route('/currentUser')
+@Question_Management.route('/currentUser')
 def get_current_user(user: str):
     db = get_db()
     cursor = db.cursor()
@@ -46,14 +35,7 @@ def admin_check(user):
 
 
 
-
-@app.route('/')
-@app.route('/home')
-def index():
-    return render_template('home.html')
-
-
-@app.route('/questions/<category>')
+@Question_Management.route('/questions/<category>')
 def Question_manager(category):
     if admin_check('admin'):
         cursor = get_db().cursor()
@@ -64,7 +46,7 @@ def Question_manager(category):
         return render_template ('not_allowed.html')
     
 
-@app.route('/categories')
+@Question_Management.route('/categories')
 def show_categories():
     if admin_check('admin'):
         cursor = get_db().cursor()
@@ -76,7 +58,7 @@ def show_categories():
         return render_template ('not_allowed.html')
 
 
-@app.route ('/questions/add/<category>', methods=['GET', 'POST'] )
+@Question_Management.route ('/questions/add/<category>', methods=['GET', 'POST'] )
 def add_Question(category):
     if admin_check('admin'):
         if request.method == 'POST':
@@ -93,7 +75,7 @@ def add_Question(category):
         return render_template ('not_allowed.html')
 
 
-@app.route ('/questions/delet/<category>', methods = ['GET', 'POST'])
+@Question_Management.route ('/questions/delet/<category>', methods = ['GET', 'POST'])
 def remove_Question(category):
     if admin_check('admin'):
         cursor = get_db().cursor()
@@ -110,7 +92,7 @@ def remove_Question(category):
         return render_template ('not_allowed.html')
 
 
-@app.route ('/categories/add', methods = ['GET', 'POST'])
+@Question_Management.route ('/categories/add', methods = ['GET', 'POST'])
 def add_category():
     cursor = get_db().cursor()
     if admin_check('admin'):
@@ -126,14 +108,14 @@ def add_category():
                 cursor.execute("INSERT INTO categories (name) VALUES (?)", (new_category,))
                 get_db().commit()
                 flash('Successfully created new category', 'success')
-                return redirect(url_for('Question_manager', category=new_category))
+                return redirect(url_for('Question_Management.Question_manager', category=new_category))
 
         return render_template('add_category.html')
     else:
         return render_template ('not_allowed.html')
 
 
-@app.route ('/categories/delet/<category>')
+@Question_Management.route ('/categories/delet/<category>')
 def remove_category(category):
     cursor = get_db().cursor()
     if admin_check('admin'):
@@ -141,7 +123,7 @@ def remove_category(category):
             cursor.execute("DELETE FROM categories WHERE name=?", (category,))
             get_db().commit()
             flash('Category Removed', 'danger')
-            return redirect(url_for('show_categories'))
+            return redirect(url_for('Question_Management.show_categories'))
     else:
         return render_template ('not_allowed.html')
 
@@ -156,11 +138,11 @@ user_data = {
     'marks': [10, 8 , 7 ,5, 9]
 }
 
-@app.route('/profile')
+@Question_Management.route('/profile')
 def profile():
     return render_template('profile.html', user=user_data)
 
-@app.route('/edit_profile', methods=['GET', 'POST'])
+@Question_Management.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
     if request.method == 'POST':
         user_data['name'] = request.form['name']
@@ -180,11 +162,8 @@ def edit_profile():
 
     return render_template('edit_profile.html', user=user_data)
 
-@app.route('/quiz_marks')
+@Question_Management.route('/quiz_marks')
 def quiz_marks():
     return render_template('quiz_marks.html', marks=user_data['marks'])
 
 #-----------------------------------------------------------------------------------------------------------------------------------
-
-if __name__ == '__main__':
-    app.run (debug = False)

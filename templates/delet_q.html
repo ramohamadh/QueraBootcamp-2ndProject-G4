@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form action="{{ url_for('remove_Question', category=category) }}", method="post">
+<form action="{{ url_for('Question_Management.remove_Question', category=category) }}", method="post">
     <table class="table table-striped">
         <thead>
             <tr>
@@ -25,7 +25,7 @@
     <br><button type="submit" class="btn btn-danger">Delete Selected</button>
 </form>
 
-<a href="{{ url_for('Question_manager', category=category) }}" class="btn">
+<a href="{{ url_for('Question_Management.Question_manager', category=category) }}" class="btn">
     Return
 </a>
 

@@ -3,7 +3,7 @@
 {% block content %}
 
 
-<form action="{{ url_for('add_Question', category=category) }}" method="post">
+<form action="{{ url_for('Question_Management.add_Question', category=category) }}" method="post">
     
     <div class="mb-3">
         <div class="col-md-4">
@@ -29,7 +29,7 @@
 
 </form>
 
-<a href="{{ url_for('Question_manager', category=category) }}" class="btn">
+<a href="{{ url_for('Question_Management.Question_manager', category=category) }}" class="btn">
     Return
 </a>
 <br>

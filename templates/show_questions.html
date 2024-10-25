@@ -25,16 +25,16 @@
   </table>
 
 <div class="d-grid gap-2 d-md-block">
-    <a href="{{ url_for('remove_Question', category=category) }}" class="btn">
+    <a href="{{ url_for('Question_Management.remove_Question', category=category) }}" class="btn">
         Remove
     </a>
-    <a href="{{ url_for('add_Question', category=category) }}" class="btn"> 
+    <a href="{{ url_for('Question_Management.add_Question', category=category) }}" class="btn"> 
         Add
     </a>
-    <a href="{{ url_for('show_categories') }}" class="btn">
+    <a href="{{ url_for('Question_Management.show_categories') }}" class="btn">
         Return
     </a>
-    <a href="{{ url_for('remove_category', category=category) }}" class="btn">
+    <a href="{{ url_for('Question_Management.remove_category', category=category) }}" class="btn">
         Remove Category
     </a>
 </div>

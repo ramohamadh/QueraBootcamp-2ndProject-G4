@@ -5,6 +5,7 @@ import sqlite3
 app = Flask (__name__)
 app.secret_key = 'fwugyewqlufywqliugfqw'
 
+
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect('quiz.db')

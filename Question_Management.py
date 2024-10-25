@@ -184,8 +184,6 @@ def edit_profile():
 def quiz_marks():
     return render_template('quiz_marks.html', marks=user_data['marks'])
 
-if __name__ == '__main__':
-    app.run(debug=True)
 #-----------------------------------------------------------------------------------------------------------------------------------
 
 if __name__ == '__main__':

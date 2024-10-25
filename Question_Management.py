@@ -2,9 +2,9 @@ from flask import Flask, render_template, redirect, url_for, request, flash , g
 from dataclasses import dataclass
 import sqlite3
 
-
 app = Flask (__name__)
 app.secret_key = 'fwugyewqlufywqliugfqw'
+
 
 
 def get_db():

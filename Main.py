@@ -2,11 +2,12 @@ from flask import Flask, render_template, redirect, url_for, request, flash , g 
 import sqlite3
 from Question_Management import Question_Management
 from login_signup import login_signup
-
+from profile1 import profile1
 
 app = Flask (__name__)
 app.register_blueprint(Question_Management, url_prefix="")
 app.register_blueprint(login_signup, url_prefix="")
+app.register_blueprint(profile1, url_prefix="")
 app.secret_key = 'fwugyewqlufywqliugfqw'
 
 

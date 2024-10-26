@@ -11,6 +11,7 @@ def get_db():
     return g.db
 
 
+
 @profile1.route('/profile/<username>')
 def profile(username):
     conn = get_db()

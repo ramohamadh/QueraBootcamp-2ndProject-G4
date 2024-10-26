@@ -29,6 +29,9 @@ cursor = connection.cursor()
 # #===================================================================================================
 
 # #============================================= Users ===============================================
+##delete:
+##cursor.execute("DROP TABLE IF EXISTS users")
+
 
 # cursor.execute('''
 # CREATE TABLE IF NOT EXISTS users (
@@ -36,6 +39,9 @@ cursor = connection.cursor()
 #                username TEXT NOT NULL UNIQUE,
 #                password TEXT NOT NULL,
 #                email TEXT NOT NULL UNIQUE,
+#                first_name TEXT,
+#                last_name TEXT,
+#                age INTEGER,
 #                quiz_results REAL,
 #                login BOOL NOT NULL DEFAULT 0, -- (0 = False)(1 = True)
 #                admin BOOL NOT NULL DEFAULT 0  -- (0 = not admin)(1 = admin)
@@ -47,8 +53,8 @@ cursor = connection.cursor()
 # #=========================================== Deafult rows =========================================
 
 # #admin user:
-# cursor.execute("INSERT INTO users (username, password, email, admin) VALUES (?, ?, ?, ?)",
-#                ('admin', 'admin', 'admin.admin@gmail.com', 1))
+# cursor.execute ("INSERT INTO users (username, password, email, first_name, last_name, admin) VALUES (?, ?, ?, ?, ?, ?)",
+#                ('admin', 'admin', 'admin.admin@gmail.com', 'adminkhan', 'adminian', 1))
 
 #categories:
 # cursor.execute("PRAGMA foreign_keys = ON")

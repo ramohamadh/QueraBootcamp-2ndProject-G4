@@ -15,7 +15,7 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         if 'username' not in session:
             flash('You need to log in first.')
-            return redirect(url_for('login_signup.login'))  # Redirect to your login page
+            return redirect(url_for('login_signup.login'))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -51,8 +51,7 @@ def edit_profile(username):
         age = request.form['age']
         password = request.form['password']
 
-        # Prepare the SQL query based on whether the password is provided
-        if password:  # Only update the password if it's not empty
+        if password:  #update the password if it's not empty
             conn.execute('UPDATE users SET first_name = ?, last_name = ?, email = ?, age = ?, password = ? WHERE username = ?',
                          (first_name, last_name, email, age, password, username))
         else:  # Update without changing the password
@@ -85,7 +84,7 @@ def quiz_marks(username):
     if user is None:
         abort(404)
 
-    # Quiz list
+    #quiz list (check if it works with Quiz.py)
     quiz_marks = user['quiz_results'].split(',') if user['quiz_results'] else []
 
     return render_template('quiz_marks.html', username=username, marks=quiz_marks)

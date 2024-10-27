@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %}Select Number of Questions{% endblock %}
+
+{% block content %}
+<h1>Select Number of Questions for {{ category }}</h1>
+<form method="post">
+    <div class="mb-3">
+        <label for="num_questions" class="form-label">Number of Questions</label>
+        <input type="number" class="form-control" name="num_questions" min="1" max="10" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Start Quiz</button>
+</form>
+{% endblock %}

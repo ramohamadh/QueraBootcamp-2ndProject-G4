@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %}Quiz Categories{% endblock %}
+
+{% block content %}
+<h1>Quiz Categories</h1>
+<ul class="list-group">
+    {% for category in categories %}
+    <li class="list-group-item">
+        <a href="{{ url_for('start_quiz', category=category) }}">{{ category }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

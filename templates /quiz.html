@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}Quiz Question{% endblock %}
+
+{% block content %}
+<h1>Question {{ question_num }} of {{ session['num_questions'] }}</h1>
+<p>{{ question.question }}</p>
+<form method="post">
+    {% for option in question.options %}
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="answer" value="{{ option }}" id="{{ option }}">
+        <label class="form-check-label" for="{{ option }}">{{ option }}</label>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Next</button>
+</form>
+{% endblock %}

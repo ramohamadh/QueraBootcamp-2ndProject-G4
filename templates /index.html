@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block title %}the Quiz App{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1>Quiz Application!</h1>
+    <p class="lead">Test your knowledge in various subjects.</p>
+    
+    <div class="mb-3">
+        <a href="{{ url_for('show_categories') }}" class="btn btn-primary btn-lg">View Quiz Categories</a>
+    </div>
+
+    {% if 'username' in session %}
+    <p>Hello, {{ session['username'] }}! <a href="{{ url_for('login_signup.logout', username=session['username']) }}" style="color: red;">Log Out</a></p>
+    {% else %}
+    <p><a href="{{ url_for('login_signup.login_or_signup') }}" class="btn btn-secondary">Login / Sign Up</a></p>
+    {% endif %}
+</div>
+{% endblock %}

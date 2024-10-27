@@ -22,7 +22,7 @@
             {% if 'username' in session and session['username'] == 'admin' %}
             <a class="nav-link" href="{{ url_for('Question_Management.show_categories') }}">Questions</a>
             {% endif %}
-            <a class="nav-link" href="#">Quiz</a>
+            <a class="nav-link" href="{{ url_for('show_categories') }}">Quiz</a>
             {%if 'username' in session %}
             <a class="nav-link" href="{{ url_for('profile1.profile' ,username=session['username']) }}">Profile</a>
             {% else %}

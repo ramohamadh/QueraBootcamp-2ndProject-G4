@@ -55,6 +55,8 @@ cursor = connection.cursor()
 # #admin user:
 # cursor.execute ("INSERT INTO users (username, password, email, first_name, last_name, admin) VALUES (?, ?, ?, ?, ?, ?)",
 #                ('admin', 'admin', 'admin.admin@gmail.com', 'adminkhan', 'adminian', 1))
+# cursor.execute ("INSERT INTO users (username, password, email, first_name, last_name, admin, quiz_results) VALUES (?, ?, ?, ?, ?, ?, ?)",
+#                ('user3', 'password3', 'useremail3@gmail.com', 'userfirstname3', 'userlastname3', 0, '10, 9, 8, 7, 10, 4'))
 
 #categories:
 # cursor.execute("PRAGMA foreign_keys = ON")

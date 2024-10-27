@@ -30,7 +30,7 @@ def login():
                 get_db().commit() 
                 session['username'] = input_username
                 flash('Successfull LogIn', 'success')
-                return redirect(url_for('index'))
+                return redirect(url_for('index')) # change to profile maybe
             elif hovered_user and hovered_user['password'] != input_password:
                 flash('Wrong Password', 'danger')
                 return render_template('login.html')

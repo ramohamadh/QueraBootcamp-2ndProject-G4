@@ -56,21 +56,24 @@
             </div>
           {% endif %}
         {% endwith %}
+        {% if 'username' in session %}
+          <div class="row">
+              <div class="col-md-6">
+                  <p><strong>Username:</strong> {{ user.username }}</p>
+                  <p><strong>First Name:</strong> {{ user.first_name }}</p>
+                  <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+                  <p><strong>Email:</strong> {{ user.email }}</p>
+                  <p><strong>Age:</strong> {{ user.age }}</p>
 
-        <div class="row">
-            <div class="col-md-6">
-                <p><strong>Username:</strong> {{ user.username }}</p>
-                <p><strong>First Name:</strong> {{ user.first_name }}</p>
-                <p><strong>Last Name:</strong> {{ user.last_name }}</p>
-                <p><strong>Email:</strong> {{ user.email }}</p>
-                <p><strong>Age:</strong> {{ user.age }}</p>
 
-
-                <a href="{{ url_for('profile1.edit_profile', username = user.username) }}" class="btn btn-primary">Edit Profile</a>
-                <a href="{{ url_for('profile1.quiz_marks', username = user.username) }}" class="btn btn-secondary">View Quiz Marks</a>
-                <a href="#" class="btn btn-secondary">Log Out</a>
-            </div>
-        </div>
+                  <a href="{{ url_for('profile1.edit_profile', username = user.username) }}" class="btn btn-primary">Edit Profile</a>
+                  <a href="{{ url_for('profile1.quiz_marks', username = user.username) }}" class="btn btn-secondary">View Quiz Marks</a>
+                  <a href="#" class="btn btn-secondary">Log Out</a>
+              </div>
+          </div>
+        {% else %}
+          <a class="nav-link active" aria-current="page" href="{{ url_for('login_signup.login_or_signup') }}">User/LogIn</a>
+        {% endif %}
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
